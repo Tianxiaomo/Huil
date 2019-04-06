@@ -183,6 +183,21 @@ def min_area_rect(xs, ys):
     rects.set_shape([None, 5])
     return rects
 
+def gpu_set(gpu_num):
+    import tensorflow as tf
+    import keras.backend.tensorflow_backend as KTF
+    import os
+    if isinstance(gpu_num, (list, tuple)):
+        gpu_num = ','.join(str(i) for i in gpu_num)
+    os.environ['CUDA_VISIBLE_DEVICES'] = str(gpu_num)
+
+    config = tf.ConfigProto()
+    config.gpu_options.allow_growth = True
+
+    sess = tf.Session(config=config)
+    KTF.set_session(sess)
+    print('GPU config done!')
+
 def gpu_config(config = None, allow_growth = None, gpu_memory_fraction = None):
     if config is None:
         config = tf.ConfigProto()
