@@ -9,6 +9,8 @@ except:
 import numpy as np
 import logging
 import math
+import os
+import glob as gb
 from Hutil import event
 import Hutil
 
@@ -526,3 +528,16 @@ def polyline(img, points, color, closed = False, line_width = 1, thickness = Non
     points = np.asarray(points, dtype = np.int32)
     cv2.polylines(img, [points], closed, color, thickness = line_width)
     return img
+
+def get_images(root):
+    '''
+    get images's path and name
+    '''
+    files = []
+    for ext in ['jpg', 'png', 'jpeg', 'JPG']:
+        files.extend(gb.glob(os.path.join(root, '*.{}'.format(ext))))
+    name = []
+    for i in range(len(files)):
+        name.append(files[i].split('/')[-1])
+    return files, name
+

@@ -60,5 +60,47 @@ class ProcessPool(object):
     def join(self):
         self.pool.close()
         self.pool.join()
-        
-        
+
+
+import multiprocessing as mlp
+from multiprocessing import Pool
+
+# # 任务数量
+# num =
+#
+# # 子任务
+# def task(s,e):
+#     print('sub task')
+#
+# # 线程池
+# p = Pool()
+# n_cpu = mlp.cpu_count()
+# split = num // n_cpu
+#
+# for i in range(n_cpu):
+#     a = split * i
+#     if i == n_cpu - 1:
+#         b = num
+#     else:
+#         b = split * (i + 1)
+#     p.apply_async(task, args=(s,e))
+#
+# p.close()
+# p.join()
+
+def multitask(task,num):
+    p = Pool()
+    n_cpu = mlp.cpu_count()
+    split = num // n_cpu
+
+    for i in range(n_cpu):
+        s = split * i
+        if i == n_cpu - 1:
+            e = num
+        else:
+            e = split * (i + 1)
+        p.apply_async(task, args=(s, e))
+
+    p.close()
+    p.join()
+
